@@ -4,10 +4,11 @@ Loads an image, converts to grayscale, and resizes to appropriate dimensions
 while maintaining aspect ratio.
 """
 
+
 import numpy as np
 from PIL import Image
 
-
+# Fix the type annotation to 'str', set the default to the correct relative path
 def prepare_image(
     img_path: str,
     max_size: int = 512,
@@ -52,6 +53,10 @@ def prepare_image(
             img_resized_pil = img_resized_pil.convert('L')
         img_resized = np.array(img_resized_pil, dtype=np.float32) / 255.0
         print(f"Resized image to target size: {img_resized.shape}")
+        # Ensure 2D array
+        if len(img_resized.shape) > 2:
+            img_resized = img_resized.squeeze()
+        return img_resized
     elif img_array.shape[0] > max_size or img_array.shape[1] > max_size:
         # Resize to fit within max_size while maintaining aspect ratio
         scale = max_size / max(img_array.shape[0], img_array.shape[1])
@@ -60,19 +65,21 @@ def prepare_image(
         if img_resized_pil.mode != 'L':
             img_resized_pil = img_resized_pil.convert('L')
         img_resized = np.array(img_resized_pil, dtype=np.float32) / 255.0
-        print(f"Resized image from {img_array.shape} to {img_resized.shape} for processing")
+        print(f"Resized image to fit max_size {max_size}: {img_resized.shape}")
+        return img_resized
     else:
-        img_resized = img_array.copy()
-        print(f"Image size: {img_resized.shape} (no resizing needed)")
+        # No resizing needed
+        print(f"Image size: {img_array.shape} (no resizing needed)")
     
-    # Ensure img_resized is 2D grayscale
-    if len(img_resized.shape) > 2:
-        img_resized = img_resized[:, :, 0]
-    elif len(img_resized.shape) == 2:
-        pass
-    else:
-        raise ValueError(f"Unexpected image shape: {img_resized.shape}")
+    # Ensure 2D array (remove any extra dimensions)
+    if len(img_array.shape) > 2:
+        img_array = img_array.squeeze()
     
-    print(f"Final image shape: {img_resized.shape} (should be 2D for grayscale)")
-    return img_resized
+    # Ensure it's 2D
+    if len(img_array.shape) != 2:
+        raise ValueError(f"Expected 2D array, got shape {img_array.shape}")
+    
+    print(f"Final image shape: {img_array.shape} (should be 2D for grayscale)")
+    return img_array
+
 
