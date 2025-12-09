@@ -82,10 +82,6 @@ plt.show()
 
 ## Step 3: Create Tonal Analysis (Optional Refinement Step)
 
-::: {.callout-note}
-## 🔧 Optional Refinement Step
-
-
 
 
 ```{python}
@@ -155,7 +151,7 @@ print(f"  - Use mid_tone_center around {tonal_stats['mean']:.2f} to emphasize av
 **Task:** Create a function `create_block_letter_s()` that generates a block letter "S" matching your image dimensions.
 
 
-
+:::
 
 ```{python}
 # | label: step4-block-letter
