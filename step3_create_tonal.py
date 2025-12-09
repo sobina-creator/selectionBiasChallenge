@@ -4,6 +4,7 @@ This computes box-averaged tones across a grid to help understand the
 distribution of brightness values, which can be used to tune stippling parameters.
 """
 
+
 import numpy as np
 
 
