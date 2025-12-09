@@ -133,6 +133,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from step1_prepare_image import prepare_image
 
+
+
 # Load and prepare the image
 # CHANGE THIS to use your own image!
 img_path = 'sobina.jpg'  # Example image - replace with your own image
